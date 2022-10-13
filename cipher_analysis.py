@@ -52,10 +52,9 @@ def display_frequencies(freq_dict: dict, length: int):
     #
     ax_1 = plt.subplot(111)
     ax_2 = ax_1.twiny()
-
     x = ordered_letters
     x_axis = np.arange(26)
-    y_1 = [freq_dict[letter] for letter in ordered_letters]
+    y_1 = [(freq_dict[letter] / length) * 100 for letter in ordered_letters]
     y_2 = [12.02, 9.1, 8.12, 7.68, 7.31, 6.95, 6.28, 6.02, 5.92, 4.32, 3.98, 2.88, 2.71, 2.61, 2.3, 2.11, 2.09, 2.03,
            1.82, 1.49, 1.11, 0.69, 0.17, 0.11, 0.1, 0.07]
 
@@ -70,7 +69,7 @@ def display_frequencies(freq_dict: dict, length: int):
 
     ax_2.set_xlim(ax_1.get_xlim())
     ax_2.set_xticks(ticks=range(0, 26))
-    ax_2.set_xticklabels(np.array([char for char in "abcdefghijklmnopqrstuvwxyz"]))
+    ax_2.set_xticklabels(np.array([char for char in "etaoinsrhdlucmfywgpbvkxqjz"]))
     ax_2.set_xlabel("Frequency of letters in English alphabet")
     ax_1.set_xlabel("Frequency of letters in ciphertext")
     ax_1.legend(labels=["English alphabet", "ciphertext"])
