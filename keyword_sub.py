@@ -48,3 +48,18 @@ def keyword_decrypt(ciphertext: str, keyword: str) -> str:
         if 97 <= ord(current) <= 122:
             plaintext[i] = ALPH[decrypt_key.index(current)]
     return ''.join(plaintext)
+
+
+def replace_letters(ciphertext: str, mappings: dict, plain_to_cipher):
+    print("PRINTING KEY FROM PLAINTEXT TO CIPHERTEXT")
+    mappings = {k.lower(): mappings[k].lower() for k in mappings.keys()}
+    ciphertext = ciphertext.lower()
+    assert len(set(mappings.values())) == len(mappings.values()) and len(set(mappings.keys())) == len(mappings.keys())
+    sorted_mappings = sorted(mappings.items(), key=lambda t: t[1])
+    if plain_to_cipher:
+        print("\n".join(":".join(c) for c in sorted_mappings))
+    else:
+        print("\n".join(":".join(c[::-1]) for c in sorted_mappings))
+    print("PRINTING FORMATTED CIPHERTEXT")
+    output = "".join(mappings[c] if c in mappings.keys() else (f"-{c}-" if c.isalpha() else c) for c in ciphertext)
+    print(output)
