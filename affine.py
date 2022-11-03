@@ -19,7 +19,7 @@ def affine_encode(plaintext: str, multiplier: int, shift: int) -> str:
 
 def check_valid_params(multiplier: int) -> bool:
     #
-    # The multiplier must be coprime to 26 according to mod 26 arithmetic
+    # The multiplier must be co-prime to 26 according to mod 26 arithmetic
     #
     if multiplier % 2 == 0 or multiplier % 13 == 0 or multiplier % 26 == 0:
         return False
@@ -45,11 +45,11 @@ def affine_decode(ciphertext: str, multiplier: int, shift: int) -> str:
         return ciphertext
 
 
-def affine_brute_force(plaintext: str):
+def affine_brute_force(ciphertext: str):
     #
     # Tries all 311 possible combinations
     #
     for i in range(1, 26):
         if check_valid_params(i):
             for j in range(0, 26):
-                yield affine_decode(plaintext, i, j)
+                yield affine_decode(ciphertext, i, j)

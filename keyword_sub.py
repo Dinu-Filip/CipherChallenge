@@ -4,8 +4,7 @@ ALPH = "abcdefghijklmnopqrstuvwxyz"
 def create_key(keyword: str) -> list:
     key = []
     #
-    # Removes duplicate letters in keyword
-    # Keyword must be uppercase
+    # Removes duplicate letters in keyword, which must be uppercase
     #
     for char in keyword:
         if char not in key:
@@ -62,4 +61,22 @@ def replace_letters(ciphertext: str, mappings: dict, plain_to_cipher):
         print("\n".join(":".join(c[::-1]) for c in sorted_mappings))
     print("PRINTING FORMATTED CIPHERTEXT")
     output = "".join(mappings[c] if c in mappings.keys() else (f"-{c}-" if c.isalpha() else c) for c in ciphertext)
-    print(output)
+    return output
+
+
+def get_nth_most_common_substrings(tuples: list[tuple], ciphertext: str):
+    #
+    # Takes a list of tuples in the form [(l, n)] and
+    # finds the nth most common substrings of length l
+    # in the ciphertext
+    #
+    for tu in tuples:
+        l, n = tu
+        occurrences = {}
+        for i in range(len(ciphertext) - l):
+            substring = ciphertext[i:i + l]
+            occurrences[substring] = occurrences.pop(substring, 0) + 1
+        most_common_substrings = sorted(occurrences.items(), key=lambda t: t[1])[-n:]
+        print(f"Length: {l}")
+        result = ", ".join(f"{t[0]}: {t[1]}" for t in most_common_substrings)
+        print(result)

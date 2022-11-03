@@ -5,3 +5,5 @@
 .idea/inspectionProfiles/Project_Default.xml
 .idea/inspectionProfiles/profiles_settings.xml
 .idea/CipherChallenge.iml
+.idea/other.xml
+__pycache__/cipher_analysis.cpython-39.pyc
