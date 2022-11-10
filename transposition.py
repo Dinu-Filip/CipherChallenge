@@ -1,6 +1,15 @@
 ALPH = "abcdefghijklmnopqrstuvwxyz"
 
 
+def perms(l: list):
+    if len(l) == 1:
+        yield l
+    for i in range(len(l)):
+        rest_list = l[:i] + l[i + 1:]
+        for perm in perms(rest_list):
+            yield [l[i]] + perm
+
+
 def key_clean(key: str) -> list:
     new_key = []
     for char in key:
@@ -89,3 +98,23 @@ def swap_columns(l: list[tuple[int, int]], ciphertext: str, separator=" ") -> st
             segment[i2] = temp
         segments[i] = segment
     return "\n".join("".join(l) for l in segments)
+
+
+def rearrange(s: str, arrangement: list[int]):
+    if not s:
+        return ""
+    result = ""
+    for i in arrangement:
+        result += s[i]
+    return result
+
+
+def brute_force_decrypt_by_row(ciphertext: str, separator=" "):
+    segments = ciphertext.split(separator)
+    indexes = list(range(0, len(segments[0])))
+    result = []
+    print(indexes)
+    for perm in perms(indexes):
+        print(perm)
+        result.append((perm, "".join(rearrange(segment, perm) for segment in segments)))
+    return result
