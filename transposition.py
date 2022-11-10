@@ -9,7 +9,7 @@ def key_clean(key: str) -> list:
     return new_key
 
 
-def trans_encrypt(plaintext: str, key: str, block_length: int) -> str:
+def trans_encrypt(plaintext: str, key: str, block_length: int) -> tuple[str, str]:
     plaintext = [char.upper() for char in plaintext if char.isalpha()]
     #
     # Removes duplicate letters
@@ -57,6 +57,35 @@ def trans_encrypt(plaintext: str, key: str, block_length: int) -> str:
             vertical_trans_map += trans_map[n][m]
 
     for o in range(0, len(vertical_trans_map), block_length):
-        vertical_cipher_text += vertical_trans_map[o : o + block_length] + " "
+        vertical_cipher_text += vertical_trans_map[o: o + block_length] + " "
 
     return horizontal_cipher_text, vertical_cipher_text
+
+
+def swap_columns(l: list[tuple[int, int]], ciphertext: str) -> str:
+    #
+    # Ciphertext must be a string separated into segments of fixed length separated by spaces
+    # L is in the form [(i1, j1), (i2, j2)....], with i1 and j1, i2 and j2.... giving the indexes in each
+    # segment to be swapped
+    #
+    segments = [list(s) for s in ciphertext.split()]
+    if len(segments) == 1:
+        raise Exception("ciphertext must be split into segments of fixed length separated by spaces")
+    indexes = {}
+    for tu in l:
+        i1, i2 = tu
+        if indexes.pop(i1, None):
+            raise Exception(f"Index {i1} was mentioned more than once")
+        if indexes.pop(i2, None):
+            raise Exception(f"Index {i2} was mentioned more than once")
+        indexes[i1] = 1
+        indexes[i2] = 1
+
+    for i, segment in enumerate(segments):
+        for tu in l:
+            i1, i2 = tu
+            temp = segment[i1]
+            segment[i1] = segment[i2]
+            segment[i2] = temp
+        segments[i] = segment
+    return "\n".join("".join(l) for l in segments)
