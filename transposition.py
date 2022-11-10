@@ -62,13 +62,13 @@ def trans_encrypt(plaintext: str, key: str, block_length: int) -> tuple[str, str
     return horizontal_cipher_text, vertical_cipher_text
 
 
-def swap_columns(l: list[tuple[int, int]], ciphertext: str) -> str:
+def swap_columns(l: list[tuple[int, int]], ciphertext: str, separator=" ") -> str:
     #
     # Ciphertext must be a string separated into segments of fixed length separated by spaces
     # L is in the form [(i1, j1), (i2, j2)....], with i1 and j1, i2 and j2.... giving the indexes in each
     # segment to be swapped
     #
-    segments = [list(s) for s in ciphertext.split()]
+    segments = [list(s) for s in ciphertext.split(separator)]
     if len(segments) == 1:
         raise Exception("ciphertext must be split into segments of fixed length separated by spaces")
     indexes = {}
