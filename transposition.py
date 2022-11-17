@@ -118,3 +118,9 @@ def brute_force_decrypt_by_row(ciphertext: str, separator=" "):
         print(perm)
         result.append((perm, "".join(rearrange(segment, perm) for segment in segments)))
     return result
+
+
+def split_into_segments(ciphertext: str, column_width, separator=" "):
+    # splits ciphertext into segments of specified length
+    s = ciphertext.replace(separator, "")
+    return separator.join(s[i:i + column_width] for i in range(0, len(s), column_width))
